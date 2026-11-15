@@ -1,0 +1,15 @@
+# ENDICEX | Entorno Conda
+# Ejecutar desde la raiz del repositorio:
+#   conda env create -f environment.yml
+#   conda activate endicex
+#
+# Las dependencias de Python se mantienen en requirements.txt
+# para evitar dos listas que puedan desincronizarse.
+name: endicex
+channels:
+  - conda-forge
+dependencies:
+  - python=3.11
+  - pip
+  - pip:
+      - -r requirements.txt

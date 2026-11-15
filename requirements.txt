@@ -1,0 +1,34 @@
+# ENDICEX | Dependencias iniciales para notebooks de ciencia de datos
+# Proyecto: https://github.com/endicex/Endicex
+# Ejecutar desde la raiz del repositorio:
+#   python -m pip install -r requirements.txt
+#
+# IMPORTANTE: esta es una configuracion de partida. Las librerias y versiones
+# deben contrastarse con los imports y el entorno original de los notebooks.
+# Los intervalos de versiones NO constituyen un entorno fijado exactamente.
+
+# Tratamiento de datos y calculo cientifico
+numpy>=1.26,<3.0
+pandas>=2.2,<3.0
+scipy>=1.12,<2.0
+
+# Analisis multivariante, PCA y K-means
+scikit-learn>=1.4,<2.0
+
+# Graficos y visualizacion (2D/3D)
+matplotlib>=3.8,<4.0
+seaborn>=0.13,<1.0
+plotly>=5.20,<7.0
+
+# Lectura y escritura de archivos Excel (.xlsx)
+openpyxl>=3.1,<4.0
+
+# Ejecucion de notebooks
+jupyterlab>=4.0,<5.0
+ipykernel>=6.0,<8.0
+
+# Incorporar SOLO si los notebooks efectivamente los importan:
+# geopandas       # Cartografia y datos geoespaciales
+# requests        # Descarga de datos desde APIs
+# kaleido         # Exportacion estatica de figuras Plotly (ver requisitos)
+# xlsxwriter      # Exportacion avanzada a Excel
