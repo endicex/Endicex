@@ -1,0 +1,42 @@
+
+# ENDICEX - Archivos que Git debe ignorar
+
+# 1. Archivos temporales de Python
+__pycache__/
+*.py[cod]
+*.pyd
+
+# 2. Archivos temporales de Jupyter
+.ipynb_checkpoints/
+
+# 3. Entornos virtuales
+.venv/
+venv/
+env/
+ENV/
+
+# 4. Credenciales y variables de entorno
+.env
+.env.*
+!.env.example
+
+# 5. Archivos de caché
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.cache/
+
+# 6. Archivos temporales de Excel
+~$*.xls*
+.~lock.*#
+
+# 7. Archivos temporales y registros
+*.log
+*.tmp
+*.swp
+*~
+
+# 8. Archivos del sistema operativo
+.DS_Store
+Thumbs.db
+Desktop.ini
