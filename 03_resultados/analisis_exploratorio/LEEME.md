@@ -19,7 +19,7 @@
 
 **Trazabilidad:** 111 entidades; 101 con rendición 2024; 10 sin rendición. Ocho END HAB imputados mediante medianas; se marcan con triángulo en gráficos pertinentes. Los valores imputados no son observados.
 
-**Salida:** 14 fichas de 4 paneles en PNG y SVG; 5 tablas CSV de descriptivos, extremos por estrato y auditoría. Se excluye el Excel de entrada para evitar duplicar datos; súbelo al ejecutar el notebook.
+**Salida:** 14 fichas de 4 paneles en PNG y SVG y 4 tablas CSV públicas de descriptivos, extremos por estrato y recuentos. La tabla de trazabilidad con códigos INE no se publica; el notebook puede generarla para su revisión en un entorno controlado. Se excluye el Excel de entrada para evitar duplicar datos; súbelo al ejecutar el notebook.
 
 **Interpretación:** muestra exploratoria no representativa. No hay pruebas de correlación, inferencia causal, PCA ni K-means. Los extremos IQR solo son indicios para revisión estadística, no hallazgos de fiscalización.
 
