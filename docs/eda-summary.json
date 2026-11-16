@@ -1,0 +1,297 @@
+{
+  "title": "ENDICEX · Estadísticos descriptivos agregados para portada",
+  "description": "Solo medianas y cuartiles por estrato; sin nombres, códigos INE ni registros individuales",
+  "sources": [
+    "03_resultados/analisis_exploratorio/tablas/01_descriptivos_globales.csv",
+    "03_resultados/analisis_exploratorio/tablas/02_descriptivos_por_estrato.csv"
+  ],
+  "metrics": [
+    {
+      "key": "renta_media_persona",
+      "title": "Renta media por persona (€)",
+      "category": "Social",
+      "n": 111,
+      "globalMedian": 14655.333,
+      "rows": [
+        {
+          "estrato": "<5.000",
+          "n": 48,
+          "media": 14680.978145833333,
+          "mediana": 14556.6345,
+          "p25": 11808.7305,
+          "p75": 16104.64825
+        },
+        {
+          "estrato": "5.000–19.999",
+          "n": 32,
+          "media": 14883.412625,
+          "mediana": 14304.319,
+          "p25": 13040.93475,
+          "p75": 16716.273
+        },
+        {
+          "estrato": "20.000–99.999",
+          "n": 23,
+          "media": 15305.834478260873,
+          "mediana": 14655.333,
+          "p25": 13510.537499999999,
+          "p75": 16616.4725
+        },
+        {
+          "estrato": "100.000 o más",
+          "n": 8,
+          "media": 16427.74625,
+          "mediana": 16235.812000000002,
+          "p25": 15241.3225,
+          "p75": 17381.73925
+        }
+      ]
+    },
+    {
+      "key": "gini",
+      "title": "Índice de Gini",
+      "category": "Social",
+      "n": 111,
+      "globalMedian": 27.765,
+      "rows": [
+        {
+          "estrato": "<5.000",
+          "n": 48,
+          "media": 27.33433333333333,
+          "mediana": 27.205,
+          "p25": 25.549,
+          "p75": 29.318
+        },
+        {
+          "estrato": "5.000–19.999",
+          "n": 32,
+          "media": 27.290499999999998,
+          "mediana": 26.674,
+          "p25": 26.0595,
+          "p75": 28.77375
+        },
+        {
+          "estrato": "20.000–99.999",
+          "n": 23,
+          "media": 30.03108695652173,
+          "mediana": 29.402,
+          "p25": 27.9285,
+          "p75": 30.997
+        },
+        {
+          "estrato": "100.000 o más",
+          "n": 8,
+          "media": 30.661125000000002,
+          "mediana": 30.671,
+          "p25": 29.2285,
+          "p75": 31.16725
+        }
+      ]
+    },
+    {
+      "key": "pobreza_total_60",
+      "title": "Pobreza total · umbral 60 % (%)",
+      "category": "Social",
+      "n": 111,
+      "globalMedian": 19.291,
+      "rows": [
+        {
+          "estrato": "<5.000",
+          "n": 48,
+          "media": 21.573750000000004,
+          "mediana": 19.9575,
+          "p25": 14.85,
+          "p75": 28.73225
+        },
+        {
+          "estrato": "5.000–19.999",
+          "n": 32,
+          "media": 19.5225625,
+          "mediana": 18.48,
+          "p25": 14.033,
+          "p75": 25.439999999999998
+        },
+        {
+          "estrato": "20.000–99.999",
+          "n": 23,
+          "media": 21.49591304347826,
+          "mediana": 19.468,
+          "p25": 16.057000000000002,
+          "p75": 28.3675
+        },
+        {
+          "estrato": "100.000 o más",
+          "n": 8,
+          "media": 18.8515,
+          "mediana": 18.808500000000002,
+          "p25": 16.582,
+          "p75": 20.14575
+        }
+      ]
+    },
+    {
+      "key": "GASTO MUNICIPAL",
+      "title": "Gasto municipal (€)",
+      "category": "Financiero",
+      "n": 101,
+      "globalMedian": 7720330.72,
+      "rows": [
+        {
+          "estrato": "<5.000",
+          "n": 43,
+          "media": 3457786.856744186,
+          "mediana": 2979189.14,
+          "p25": 2135834.41,
+          "p75": 4607008.3100000005
+        },
+        {
+          "estrato": "5.000–19.999",
+          "n": 29,
+          "media": 12004136.085862068,
+          "mediana": 10224109.38,
+          "p25": 7589815.7,
+          "p75": 14453079.26
+        },
+        {
+          "estrato": "20.000–99.999",
+          "n": 22,
+          "media": 80320731.97909091,
+          "mediana": 44779408.144999996,
+          "p25": 33506134.44,
+          "p75": 76356118.9575
+        },
+        {
+          "estrato": "100.000 o más",
+          "n": 7,
+          "media": 672795847.5200001,
+          "mediana": 182971303.05,
+          "p25": 139779142.825,
+          "p75": 245952226.105
+        }
+      ]
+    },
+    {
+      "key": "GTO HAB",
+      "title": "Gasto por habitante (€/hab.)",
+      "category": "Financiero",
+      "n": 101,
+      "globalMedian": 1233.11,
+      "rows": [
+        {
+          "estrato": "<5.000",
+          "n": 43,
+          "media": 1436.367848942047,
+          "mediana": 1293.52,
+          "p25": 1044.6750000000002,
+          "p75": 1710.115
+        },
+        {
+          "estrato": "5.000–19.999",
+          "n": 29,
+          "media": 1254.4509582154503,
+          "mediana": 1145.03,
+          "p25": 947.59,
+          "p75": 1476.83
+        },
+        {
+          "estrato": "20.000–99.999",
+          "n": 22,
+          "media": 1587.309006802224,
+          "mediana": 1253.875,
+          "p25": 1066.045,
+          "p75": 1542.908907111288
+        },
+        {
+          "estrato": "100.000 o más",
+          "n": 7,
+          "media": 1335.2607566909232,
+          "mediana": 1251.78,
+          "p25": 1162.48,
+          "p75": 1318.0426484182315
+        }
+      ]
+    },
+    {
+      "key": "END HAB",
+      "title": "Endeudamiento por habitante (€/hab.)",
+      "category": "Financiero",
+      "n": 101,
+      "globalMedian": 309.58,
+      "rows": [
+        {
+          "estrato": "<5.000",
+          "n": 43,
+          "media": 422.94000000000005,
+          "mediana": 256.14,
+          "p25": 158.535,
+          "p75": 524.9549999999999
+        },
+        {
+          "estrato": "5.000–19.999",
+          "n": 29,
+          "media": 318.1055172413793,
+          "mediana": 280.66,
+          "p25": 159.58,
+          "p75": 427.19
+        },
+        {
+          "estrato": "20.000–99.999",
+          "n": 22,
+          "media": 705.354881049867,
+          "mediana": 435.87,
+          "p25": 247.3975,
+          "p75": 793.4024999999999
+        },
+        {
+          "estrato": "100.000 o más",
+          "n": 7,
+          "media": 800.5157142857142,
+          "mediana": 631.29,
+          "p25": 521.615,
+          "p75": 1080.885
+        }
+      ]
+    },
+    {
+      "key": "INV POR HAB",
+      "title": "Inversión por habitante (€/hab.)",
+      "category": "Financiero",
+      "n": 101,
+      "globalMedian": 181.7,
+      "rows": [
+        {
+          "estrato": "<5.000",
+          "n": 43,
+          "media": 302.1703983540469,
+          "mediana": 233.604202394747,
+          "p25": 141.375,
+          "p75": 384.46500000000003
+        },
+        {
+          "estrato": "5.000–19.999",
+          "n": 29,
+          "media": 197.19563748349108,
+          "mediana": 169.01,
+          "p25": 100.069998857926,
+          "p75": 270.96
+        },
+        {
+          "estrato": "20.000–99.999",
+          "n": 22,
+          "media": 208.48877126877198,
+          "mediana": 152.78,
+          "p25": 89.6525,
+          "p75": 243.7774808809654
+        },
+        {
+          "estrato": "100.000 o más",
+          "n": 7,
+          "media": 168.0088804303498,
+          "mediana": 138.03,
+          "p25": 122.76,
+          "p75": 165.005
+        }
+      ]
+    }
+  ]
+}
