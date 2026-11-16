@@ -11,7 +11,73 @@
  ];
  const ASSET='./eda_figuras/';
  const $=id=>document.getElementById(id);
- let current=0,visible=FIGURES.map((_,i)=>i),priorFocus=null;
+ let current=0,visible=FIGURES.map((_,i)=>i),priorFocus=null,activeFilter='all',stats=null,zoom=1;
+ const METRIC_BY_SUFFIX={
+   'renta_media_persona':'renta_media_persona',
+   'gini':'gini',
+   'pobreza_total_60':'pobreza_total_60',
+   'gasto_municipal':'GASTO MUNICIPAL',
+   'gto_hab':'GTO HAB',
+   'end_hab':'END HAB',
+   'inv_por_hab':'INV POR HAB'
+ };
+ function metricFor(figure){
+   const suffix=figure.file.replace(/^\d{2}_\d{2}_(?:individual|estratos)_/,'');
+   const key=METRIC_BY_SUFFIX[suffix];
+   return stats?.metrics?.find(m=>m.key===key)||null;
+ }
+ function fmt(x,unit){
+   if(!Number.isFinite(Number(x)))return '—';
+   const max=unit==='Gini'||unit==='Pobreza' ? 2 : 1;
+   return new Intl.NumberFormat('es-ES',{maximumFractionDigits:max}).format(Number(x));
+ }
+ function metricUnit(key){
+   return key==='gini'?'':key==='pobreza_total_60'?' %':key==='renta_media_persona'||key==='GASTO MUNICIPAL'?' €':' €/hab.';
+ }
+ function descriptiveDetails(figure){
+   const m=metricFor(figure);
+   const details=node('details','eda-descriptive');
+   const summary=node('summary','eda-descriptive-summary','Consultar cifras descriptivas');
+   details.append(summary);
+   if(!m){
+     details.append(node('p','eda-detail-empty','Puedes consultar las estadísticas descriptivas en la carpeta de resultados.'));
+     return details;
+   }
+   const unit=metricUnit(m.key);
+   const info=node('p','eda-detail-head','Mediana global: '+fmt(m.globalMedian,m.key==='gini'?'Gini':m.key==='pobreza_total_60'?'Pobreza':'Otro')+unit+' · n = '+m.n);
+   const table=node('table','eda-detail-table');
+   const caption=node('caption','sr-only','Estadísticas por estrato para '+figure.title);
+   table.append(caption);
+   const thead=node('thead');
+   const trh=node('tr');
+   for(const h of ['Estrato','n','Mediana','P25–P75']){
+     const th=node('th',null,h);th.scope='col';trh.append(th);
+   }
+   thead.append(trh);table.append(thead);
+   const tbody=node('tbody');
+   for(const r of m.rows){
+     const tr=node('tr');
+     for(const v of [r.estrato,r.n,fmt(r.mediana)+unit,fmt(r.p25)+' – '+fmt(r.p75)+unit])tr.append(node('td',null,String(v)));
+     tbody.append(tr);
+   }
+   table.append(tbody);
+   details.append(info,table);
+   return details;
+ }
+ function setZoom(z){
+   zoom=Math.max(1,Math.min(2,z));
+   const img=$('eda-dialog-image');
+   img.style.width=(zoom*100)+'%';
+   img.style.maxWidth='none';
+   img.style.maxHeight=zoom===1?'68vh':'none';
+   img.style.height='auto';
+   $('eda-dialog-zoom-level').textContent=Math.round(zoom*100)+' %';
+   $('eda-dialog-zoom-out').disabled=zoom<=1;
+   $('eda-dialog-zoom-in').disabled=zoom>=2;
+   const viewport=$('eda-dialog-viewport');
+   viewport.scrollTop=0;viewport.scrollLeft=0;
+ }
+
  function asset(figure,extension){return ASSET+figure.file+'.'+extension;}
  function node(tag,cls,text){
    const el=document.createElement(tag);
@@ -43,10 +109,11 @@
    const description=node('p','eda-card-description',figure.description);
    const foot=node('div','eda-card-links');
    foot.append(link('PNG',asset(figure,'png'),figure.file+'.png'),link('SVG',asset(figure,'svg'),figure.file+'.svg'));
-   body.append(meta,title,description,foot);article.append(trigger,body);
+   body.append(meta,title,description,descriptiveDetails(figure),foot);article.append(trigger,body);
    return article;
  }
  function render(filter){
+   activeFilter=filter;
    visible=FIGURES.map((f,i)=>filter==='all'||f.group===filter?i:null).filter(i=>i!==null);
    const holder=$('eda-gallery-grid');
    holder.replaceChildren(...visible.map(i=>card(FIGURES[i],i)));
@@ -61,7 +128,7 @@
    const figure=FIGURES[current], pos=visible.indexOf(current);
    $('eda-dialog-title').textContent=figure.title;
    $('eda-dialog-summary').textContent=figure.description+' · '+figure.n+' entidades.';
-   const pic=$('eda-dialog-image');pic.src=asset(figure,'png');pic.alt='Gráfico ampliado: '+figure.title;
+   const pic=$('eda-dialog-image');pic.onerror=function(){if(this.src.endsWith('.svg'))this.src=asset(figure,'png');};pic.src=asset(figure,'svg');pic.alt='Gráfico vectorial ampliado: '+figure.title;setZoom(1);
    $('eda-dialog-count').textContent=(pos+1)+' de '+visible.length;
    const downloads=$('eda-dialog-downloads');downloads.replaceChildren(
       link('Descargar PNG',asset(figure,'png'),figure.file+'.png'),
@@ -81,7 +148,7 @@
    if(typeof dialog.close==='function')dialog.close();
    else {dialog.removeAttribute('open');dialog.classList.remove('eda-dialog-fallback');priorFocus?.focus();}
  }
- function step(n){const i=visible.indexOf(current);current=visible[(i+n+visible.length)%visible.length];updateDialog();}
+ function step(n){const i=visible.indexOf(current);if(i<0)return;current=visible[(i+n+visible.length)%visible.length];updateDialog();}
  function init(){
    const toolbar=$('eda-gallery-filters');if(!toolbar)return;
    FILTERS.forEach(([key,text])=>{
@@ -92,6 +159,9 @@
    $('eda-dialog-close').addEventListener('click',close);
    $('eda-dialog-prev').addEventListener('click',()=>step(-1));
    $('eda-dialog-next').addEventListener('click',()=>step(1));
+   $('eda-dialog-zoom-in').addEventListener('click',()=>setZoom(zoom===1?1.5:2));
+   $('eda-dialog-zoom-out').addEventListener('click',()=>setZoom(zoom===2?1.5:1));
+   $('eda-dialog-zoom-reset').addEventListener('click',()=>setZoom(1));
    const dialog=$('eda-gallery-dialog');
    dialog.addEventListener('click',e=>{if(e.target===dialog)close();});
    dialog.addEventListener('close',()=>{priorFocus?.focus();});
@@ -99,8 +169,14 @@
      if(!dialog.open)return;
      if(e.key==='ArrowLeft'){e.preventDefault();step(-1);}
      if(e.key==='ArrowRight'){e.preventDefault();step(1);}
+     if(e.key==='+'||e.key==='='){e.preventDefault();setZoom(zoom===1?1.5:2);}
+     if(e.key==='-'){e.preventDefault();setZoom(zoom===2?1.5:1);}
    });
    render('all');
+   fetch('./eda-summary.json')
+    .then(r=>{if(!r.ok)throw Error('No hay datos agregados disponibles');return r.json();})
+    .then(j=>{if(Array.isArray(j.metrics)){stats=j;render(activeFilter);}})
+    .catch(()=>{ /* La galería gráfica funciona también sin las tablas agregadas. */ });
  }
  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else init();
 })();
