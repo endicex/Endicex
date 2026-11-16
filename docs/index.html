@@ -13,11 +13,13 @@
   <link rel="stylesheet" href="./atlas.css">
   <link rel="stylesheet" href="./eda-gallery.css">
   <link rel="stylesheet" href="./home-interactive.css">
+  <link rel="stylesheet" href="./storytelling.css">
   <script defer src="./plotly.min.js"></script>
   <script defer src="./app.js"></script>
   <script defer src="./atlas.js"></script>
   <script defer src="./eda-gallery.js"></script>
   <script defer src="./home-interactive.js"></script>
+  <script defer src="./storytelling.js"></script>
 </head>
 <body>
   <a class="skip-link" href="#contenido">Saltar al contenido</a>
@@ -38,7 +40,11 @@
           <div class="eyebrow"><span class="live-dot"></span> INVESTIGACIÓN APLICADA · REPRODUCIBILIDAD</div>
           <h1>Una nueva mirada a la <em>fiscalización pública.</em></h1>
           <p>ENDICEX explora cómo la integración de datos, el análisis de componentes principales y la segmentación multivariante pueden ayudar a comprender las diferencias entre entidades locales.</p>
-          <div class="hero-actions"><a href="#explorador" class="button button-light">Explorar resultados <span aria-hidden="true">↗</span></a><a href="#vista-eda" class="text-link">Explorar indicadores <span aria-hidden="true">→</span></a></div>
+          <div class="hero-actions story-hero-actions">
+            <button type="button" id="story-open" class="story-launch"><span class="story-launch-icon" aria-hidden="true">▶</span> Ver historia multimedia</button>
+            <a href="#explorador" class="button button-outline">Explorar resultados <span aria-hidden="true">↗</span></a>
+            <a href="#vista-eda" class="text-link">Indicadores EDA <span aria-hidden="true">→</span></a>
+          </div>
           <p class="hero-disclaimer">Estudio exploratorio y no representativo. Los perfiles no son juicios sobre la gestión de las entidades.</p>
         </div>
         <div class="hero-visual hero-interactive">
@@ -72,6 +78,26 @@
       <div><span class="number">03</span><span class="number-label">Componentes del modelo</span></div>
       <div><span class="number">05</span><span class="number-label">Perfiles exploratorios</span></div>
     </div></section>
+
+    <section id="historia" class="story-teaser" aria-labelledby="story-teaser-title">
+      <div class="container story-teaser-layout">
+        <div class="story-teaser-copy">
+          <div class="section-index">EXPERIENCIA MULTIMEDIA · ENDICEX</div>
+          <h2 id="story-teaser-title">Del dato aislado al <span>patrón compartido.</span></h2>
+          <p class="story-teaser-description">Una historia visual e interactiva para entender cómo se construye ENDICEX. Recorre cuatro capítulos animados, gira una constelación PCA real y compara indicadores. Con narración opcional en español.</p>
+          <button type="button" id="story-open-teaser" class="story-teaser-open">
+            <span aria-hidden="true">▶</span> Iniciar recorrido interactivo <span aria-hidden="true">↗</span>
+          </button>
+          <p class="story-teaser-caption">Sin reproducción automática de audio · Controles manuales · Datos del repositorio</p>
+        </div>
+        <div class="story-teaser-board" aria-label="Cuatro cifras del proceso ENDICEX">
+          <div class="story-teaser-tile"><strong>111</strong><span>Entidades de partida</span></div>
+          <div class="story-teaser-tile"><strong>101</strong><span>Entidades analizadas</span></div>
+          <div class="story-teaser-tile"><strong>03</strong><span>Dimensiones PCA</span></div>
+          <div class="story-teaser-tile"><strong>05</strong><span>Perfiles K-means</span></div>
+        </div>
+      </div>
+    </section>
 
     <section id="vista-eda" class="section home-eda-preview" aria-labelledby="home-eda-heading">
       <div class="container">
@@ -245,6 +271,43 @@
       <a href="https://github.com/endicex/Endicex/tree/main/04_graficos" target="_blank" rel="noopener noreferrer" class="method-card"><span>04</span><h3>Gráficos</h3><p>Visualizaciones y figuras documentadas en el proyecto.</p><b>Explorar carpeta ↗</b></a>
     </div><div class="integrity-note"><div class="integrity-icon">i</div><div><strong>Alcance y límites</strong><p>ENDICEX es una investigación aplicada de carácter exploratorio. La muestra no es representativa del conjunto de entidades locales. La pertenencia a un conglomerado no supone irregularidades, valoraciones de legalidad ni hallazgos de fiscalización. Las estadísticas de la web son descriptivas y no constituyen nueva evidencia.</p></div></div></div></section>
   </main>
+
+  <dialog id="story-dialog" class="story-dialog" aria-labelledby="story-title" aria-describedby="story-description">
+    <div class="story-shell">
+      <div class="story-top">
+        <span class="story-brand">ENDICEX<i>.</i></span>
+        <span class="story-top-caption">Recorrido multimedia · Investigación reproducible</span>
+        <div class="story-top-spacer"></div>
+        <button type="button" id="story-close" class="story-close" aria-label="Cerrar recorrido multimedia">×</button>
+      </div>
+      <div class="story-progress-track" aria-hidden="true"><span class="story-progress-fill" id="story-progress-fill"></span></div>
+      <nav id="story-chapters" class="story-chapter-strip" aria-label="Capítulos del recorrido">
+        <button type="button" class="story-chapter-tab is-active" data-story-chapter="0" aria-pressed="true" aria-current="step"><i>01</i> La muestra</button>
+        <button type="button" class="story-chapter-tab" data-story-chapter="1" aria-pressed="false"><i>02</i> Tres dimensiones</button>
+        <button type="button" class="story-chapter-tab" data-story-chapter="2" aria-pressed="false"><i>03</i> Indicadores</button>
+        <button type="button" class="story-chapter-tab" data-story-chapter="3" aria-pressed="false"><i>04</i> Cinco perfiles</button>
+      </nav>
+      <div class="story-main">
+        <div class="story-copy">
+          <p id="story-index" class="story-kicker">01 / ORIGEN</p>
+          <h2 id="story-title">De los datos a las preguntas.</h2>
+          <p id="story-description" class="story-copy-description">Exploración de la muestra y sus indicadores.</p>
+          <p id="story-hint" class="story-copy-hint">111 entidades de partida</p>
+        </div>
+        <div id="story-stage" class="story-stage" role="region" aria-label="Visualización del capítulo actual"></div>
+      </div>
+      <div class="story-footer">
+        <button type="button" id="story-prev" class="story-button" disabled>← Anterior</button>
+        <button type="button" id="story-next" class="story-button story-button--prime">Siguiente capítulo →</button>
+        <button type="button" id="story-play" class="story-button" aria-pressed="false">Reproducir recorrido</button>
+        <button type="button" id="story-speak" class="story-button story-button--narrate" aria-pressed="false">Escuchar narración</button>
+        <div class="story-footer-meta">
+          <span id="story-position" class="story-position" aria-live="polite">01 / 04</span>
+          <a href="#metodologia" class="story-exit-link" id="story-method-link">Ver metodología</a>
+        </div>
+      </div>
+    </div>
+  </dialog>
 
   <dialog id="eda-gallery-dialog" class="eda-gallery-dialog" aria-labelledby="eda-dialog-title">
     <div class="eda-dialog-inner">
