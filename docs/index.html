@@ -163,7 +163,7 @@
         <div id="eda-gallery-filters" class="eda-filter-bar" role="group" aria-label="Filtrar galería por bloque"></div>
         <div class="eda-gallery-info">
           <p id="eda-gallery-count" role="status" aria-live="polite">Cargando figuras…</p>
-          <p>Selecciona una figura para ampliarla o descargarla en PNG y SVG.</p>
+          <p>Abre cualquier ficha para verla en SVG vectorial y ampliar hasta el 200 %; también puedes consultar sus estadísticos.</p>
         </div>
         <div id="eda-gallery-grid" class="eda-gallery-grid">
           <p>Preparando la galería exploratoria…</p>
@@ -252,7 +252,14 @@
         <div><h3 id="eda-dialog-title">Gráfico exploratorio</h3><p class="eda-dialog-summary" id="eda-dialog-summary"></p></div>
         <button type="button" id="eda-dialog-close" class="eda-dialog-close" aria-label="Cerrar gráfico ampliado">×</button>
       </div>
-      <div class="eda-dialog-media"><img id="eda-dialog-image" src="" alt=""></div>
+      <div id="eda-dialog-viewport" class="eda-dialog-media"><img id="eda-dialog-image" src="" alt=""></div>
+      <div class="eda-zoom-tools" role="group" aria-label="Controles de ampliación del gráfico">
+        <span class="eda-zoom-label">Ampliación del SVG</span>
+        <button type="button" class="eda-nav" id="eda-dialog-zoom-out" aria-label="Reducir ampliación">−</button>
+        <output id="eda-dialog-zoom-level" aria-live="polite">100 %</output>
+        <button type="button" class="eda-nav" id="eda-dialog-zoom-in" aria-label="Aumentar ampliación">+</button>
+        <button type="button" class="eda-nav" id="eda-dialog-zoom-reset">Ajustar</button>
+      </div>
       <div class="eda-dialog-bottom">
         <div class="eda-dialog-navigation">
           <button type="button" id="eda-dialog-prev" class="eda-nav" aria-label="Figura anterior">← Anterior</button>
