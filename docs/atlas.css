@@ -1,0 +1,47 @@
+/* ENDICEX · Atlas y comparador, extensión compatible con GitHub Pages */
+.section-atlas{background:#f5f8fb}
+.section-comparator{background:#fff}
+.atlas-shell{display:grid;grid-template-columns:minmax(0,1.85fr) minmax(255px,.85fr);gap:22px;align-items:stretch}
+.atlas-map-card,.atlas-side,.atlas-compare-card{background:#fff;border:1px solid #e3eaf0;border-radius:14px;box-shadow:0 10px 36px rgba(21,42,64,.04)}
+.atlas-map-card{padding:16px;min-width:0}
+.atlas-map-svg{width:100%;height:auto;display:block;border-radius:9px}
+.atlas-region-active{transition:fill .15s ease,stroke-width .15s ease}
+.atlas-region-active:hover,.atlas-region-active:focus{stroke:#0e4451!important;stroke-width:3px!important;outline:none}
+.atlas-side{padding:26px 24px;display:flex;flex-direction:column;gap:20px}
+.atlas-side h3{font-size:19px;letter-spacing:-.025em;margin:0}
+.atlas-side p,.atlas-privacy,.atlas-explain,.atlas-footnote{color:#637589;font-size:13px;line-height:1.7;margin:0}
+.atlas-facts{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.atlas-fact{padding:15px;background:#f5f9fb;border-radius:10px}
+.atlas-fact strong{display:block;font-size:27px;letter-spacing:-.05em;color:#162b40}
+.atlas-fact span{display:block;color:#637589;font-size:11px;line-height:1.5;margin-top:3px}
+.atlas-key{display:flex;align-items:center;gap:9px;color:#56697c;font-size:12px}
+.atlas-key i{height:13px;width:13px;border-radius:3px;display:inline-block;background:#409a8a}
+.atlas-key .muted{background:#e7edf3}
+.atlas-privacy{padding:12px 14px;border-left:3px solid #409a8a;background:#f3faf8;border-radius:0 7px 7px 0}
+.atlas-error{font-size:12px;color:#667a8d;margin-top:10px}
+.atlas-compare-card{padding:26px 28px}
+.atlas-compare-toolbar{display:flex;justify-content:space-between;flex-wrap:wrap;gap:16px;margin-bottom:15px}
+.atlas-compare-toolbar label,.atlas-filter-title{font-size:11px;font-weight:800;color:#607183;letter-spacing:.02em}
+.atlas-compare-toolbar select{min-height:38px;border:1px solid #d5e0e8;border-radius:7px;padding:7px 12px;background:white;color:#23394a;margin-top:5px;max-width:245px}
+.atlas-compare-options{display:flex;align-items:end;gap:14px;flex-wrap:wrap}
+.atlas-compare-picks{display:flex;flex-wrap:wrap;gap:9px;align-items:center;margin:12px 0 16px}
+.atlas-chip{display:inline-flex;align-items:center;gap:7px;padding:9px 15px;border:1px solid #d5dfe8;border-radius:99px;background:#fff;color:#62768a;cursor:pointer;font-size:12px;font-weight:800}
+.atlas-chip.is-selected{background:#f1f6f8;border-color:#a6bdc8;color:#172b3e}
+.atlas-chip:focus-visible{outline:3px solid #70b5d0;outline-offset:2px}
+.atlas-dot{width:10px;height:10px;border-radius:50%;background:var(--profile-color)}
+.atlas-compare-plot{width:100%;height:475px}
+.atlas-compare-below{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(250px,1fr);gap:28px;align-items:start;margin-top:15px}
+.atlas-summary-table{border-collapse:collapse;width:100%;font-size:12px}
+.atlas-summary-table th,.atlas-summary-table td{border-bottom:1px solid #e8eef3;padding:9px 12px;text-align:left}
+.atlas-summary-table thead th{font-size:11px;color:#64768a;font-weight:700}
+.atlas-table-dot{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:7px}
+.atlas-action{background:#15334b;color:white;border:0;border-radius:8px;padding:9px 15px;cursor:pointer;font-size:12px;font-weight:700;align-self:end}
+.atlas-action:hover{background:#244e67}
+.atlas-footnote{margin-top:18px}
+@media(max-width:960px){.atlas-shell{grid-template-columns:1fr}.atlas-compare-below{grid-template-columns:1fr}}
+@media(max-width:650px){
+ .atlas-map-card{padding:5px}.atlas-side{padding:20px}.atlas-compare-card{padding:18px 14px}
+ .atlas-compare-plot{height:440px}.atlas-compare-toolbar{flex-direction:column}
+ .atlas-compare-options{align-items:start}.atlas-map-svg{min-width:0}
+ .atlas-facts{gap:8px}
+}
