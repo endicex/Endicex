@@ -20,12 +20,12 @@ Este apartado contiene notebooks **complementarios** de exploración descriptiva
 
 ## Resultados publicados
 
-Las [figuras y tablas del EDA](../../03_resultados/analisis_exploratorio/) están organizadas en `03_resultados/analisis_exploratorio/` y separadas del código. El CSV de trazabilidad que contiene códigos INE permanece junto a este notebook para revisión de confidencialidad y no se duplica en los resultados.
+Las [figuras y tablas del EDA](../../03_resultados/analisis_exploratorio/) están organizadas en `03_resultados/analisis_exploratorio/` y separadas del código. El CSV de trazabilidad con códigos INE no se publica en el repositorio por su potencial identificativo.
 
 ## Resultados previstos
 
 - **14 fichas** gráficas individuales/estratificadas, cada una en PNG y SVG.
-- **5 tablas CSV** de estadística descriptiva, estratos, valores atípicos IQR, trazabilidad de imputaciones y recuentos.
+- **4 tablas CSV publicadas** de estadística descriptiva, estratos, valores atípicos IQR y recuentos. El notebook también puede generar una tabla de trazabilidad con códigos INE, que debe mantenerse fuera del repositorio público.
 - **1 previsualización** de los cuatro bloques y un documento `LEEME.md` generado por el notebook.
 
 La versión publicada del notebook conserva **código y celdas explicativas, sin salidas de ejecución incrustadas**, para limitar el tamaño del repositorio y evitar publicar previsualizaciones derivadas de una ejecución particular. Los resultados se regeneran al ejecutar el notebook.
