@@ -26,6 +26,6 @@ Este apartado contiene notebooks **complementarios** de exploración descriptiva
 
 La versión publicada del notebook conserva **código y celdas explicativas, sin salidas de ejecución incrustadas**, para limitar el tamaño del repositorio y evitar publicar previsualizaciones derivadas de una ejecución particular. Los resultados se regeneran al ejecutar el notebook.
 
-**Confidencialidad y alcance:** no se muestran nombres de municipios en el notebook publicado. El código utiliza identificadores para validación y trazabilidad y puede generar CSV con identificadores y códigos INE de los datos de entrada; revisa esos archivos antes de difundir los resultados. Los gráficos y las tablas son descriptivos: no representan juicios de fiscalización, inferencia causal ni una muestra representativa.
+**Confidencialidad y alcance:** no se muestran nombres de municipios en el notebook publicado. El código utiliza identificadores para validación y trazabilidad y puede generar CSV con identificadores y códigos INE de los datos de entrada; revisa esos archivos antes de difundir los resultados. Los gráficos y las tablas son descriptivos: no representan resultados de auditoría, inferencia causal ni una muestra representativa.
 
 [Volver a notebooks](../) · [Volver al repositorio](../../)
