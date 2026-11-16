@@ -18,6 +18,10 @@ Este apartado contiene notebooks **complementarios** de exploración descriptiva
 4. Ejecuta las celdas en orden; el notebook validará la muestra, la rendición de cuentas y las **8 imputaciones** de endeudamiento por habitante.
 5. Los resultados se generan en `ENDICEX_EDA_4_BLOQUES_SALIDAS/`, organizados en `figuras/` y `tablas/`. El script final empaqueta los resultados y ofrece descargarlos desde Colab.
 
+## Resultados publicados
+
+Las [figuras y tablas del EDA](../../03_resultados/analisis_exploratorio/) están organizadas en `03_resultados/analisis_exploratorio/` y separadas del código. El CSV de trazabilidad que contiene códigos INE permanece junto a este notebook para revisión de confidencialidad y no se duplica en los resultados.
+
 ## Resultados previstos
 
 - **14 fichas** gráficas individuales/estratificadas, cada una en PNG y SVG.
