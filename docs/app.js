@@ -1,0 +1,51 @@
+'use strict';
+const COLORS={K1:'#2d9cdb',K2:'#409a8a',K3:'#f4ac55',K4:'#a48ce5',K5:'#e77592'};
+const LABELS={pc_social:'PC1 social tipificado',pc_fin1:'PC1 financiero ponderado',pc_fin2:'PC2 financiero ponderado'};
+const DESCRIPTIONS={K1:'Valores sociales relativos más bajos en el componente analizado.',K2:'Perfil central, con valores moderados en los componentes del modelo.',K3:'Componente social elevado en términos relativos.',K4:'Perfil financiero con singularidad inversora.',K5:'Perfil financiero singular, con componente de endeudamiento destacado.'};
+const state={entities:[],profiles:[],filtered:[],clusters:new Set(Object.keys(COLORS)),view:'2d',selected:null,sort:'id',asc:true};
+const $=id=>document.getElementById(id);
+const nf=(n,d=2)=>n==null||!Number.isFinite(+n)?'—':new Intl.NumberFormat('es-ES',{minimumFractionDigits:d,maximumFractionDigits:d}).format(+n);
+const escapeHTML=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const pill=c=>`<span class="tag" style="background:${COLORS[c]||'#8090a0'}">${escapeHTML(c)}</span>`;
+function boot(data){if(!data||!Array.isArray(data.entidades)||!Array.isArray(data.perfiles))throw new Error('Datos no válidos');state.entities=data.entidades;state.profiles=data.perfiles;
+  const provinces=[...new Set(state.entities.map(r=>r.provincia).filter(Boolean))].sort((a,b)=>a.localeCompare(b,'es'));
+  $('province').insertAdjacentHTML('beforeend',provinces.map(p=>`<option value="${escapeHTML(p)}">${escapeHTML(p)}</option>`).join(''));
+  $('cluster-filters').innerHTML=Object.keys(COLORS).map(k=>`<button class="chip" data-cluster="${k}" type="button" aria-pressed="true" style="--chip-color:${COLORS[k]}"><i class="dot"></i>${k}</button>`).join('');
+  $('chart-legend').innerHTML=Object.keys(COLORS).map(k=>`<span><i class="legend-dot" style="--chip-color:${COLORS[k]}"></i>${k}</span>`).join('');
+  $('cluster-filters').addEventListener('click',e=>{const b=e.target.closest('[data-cluster]');if(!b)return;const k=b.dataset.cluster;if(state.clusters.has(k))state.clusters.delete(k);else state.clusters.add(k);b.setAttribute('aria-pressed',String(state.clusters.has(k)));applyFilters();});
+  for(const id of ['search','province','population'])$(id).addEventListener(id==='search'?'input':'change',applyFilters);
+  for(const id of ['axis-x','axis-y'])$(id).addEventListener('change',renderChart);
+  $('reset').addEventListener('click',()=>{$('search').value='';$('province').value='';$('population').value='all';state.clusters=new Set(Object.keys(COLORS));document.querySelectorAll('[data-cluster]').forEach(b=>b.setAttribute('aria-pressed','true'));applyFilters();});
+  document.querySelectorAll('[data-view]').forEach(b=>b.addEventListener('click',()=>{state.view=b.dataset.view;document.querySelectorAll('[data-view]').forEach(x=>{x.classList.toggle('active',x===b);x.setAttribute('aria-pressed',String(x===b));});$('projection-controls').style.display=state.view==='2d'?'flex':'none';renderChart();}));
+  document.querySelectorAll('[data-sort]').forEach(b=>b.addEventListener('click',()=>{if(state.sort===b.dataset.sort)state.asc=!state.asc;else{state.sort=b.dataset.sort;state.asc=true;}renderTable();}));
+  $('download-csv').addEventListener('click',exportCSV);
+  renderProfiles();applyFilters();
+}
+function applyFilters(){const query=$('search').value.trim().toLocaleLowerCase('es');const province=$('province').value;const pop=$('population').value;
+  state.filtered=state.entities.filter(r=>state.clusters.has(r.cluster)&&(!query||String(r.id).toLocaleLowerCase('es').includes(query))&&(!province||r.provincia===province)&&(pop==='all'||pop==='small'&&r.poblacion<5000||pop==='medium'&&r.poblacion>=5000&&r.poblacion<=50000||pop==='large'&&r.poblacion>50000));
+  $('visible-count').textContent=String(state.filtered.length);if(state.selected&&!state.filtered.includes(state.selected)){state.selected=null;renderDetail();}renderTable();renderChart();
+}
+function renderTable(){const arr=[...state.filtered].sort((a,b)=>{const x=a[state.sort],y=b[state.sort];const c=(typeof x==='number'&&typeof y==='number')?x-y:String(x??'').localeCompare(String(y??''),'es');return state.asc?c:-c;});$('table-body').innerHTML=arr.slice(0,25).map(r=>`<tr data-id="${escapeHTML(r.id)}" class="${state.selected===r?'selected':''}"><td>${escapeHTML(r.id)}</td><td>${pill(r.cluster)}</td><td>${nf(r.pc_social)}</td><td>${nf(r.pc_fin1)}</td></tr>`).join('')||'<tr><td colspan="4">No hay entidades con estos filtros.</td></tr>';
+  $('table-foot').textContent=`Mostrando ${Math.min(arr.length,25)} de ${arr.length} entidades. Descarga el CSV para consultar todas las filas filtradas.`;
+  $('table-body').querySelectorAll('tr[data-id]').forEach(tr=>tr.addEventListener('click',()=>selectEntity(state.entities.find(r=>r.id===tr.dataset.id))));
+}
+function selectEntity(row){if(!row)return;state.selected=row;renderDetail();renderTable();}
+function renderDetail(){const r=state.selected;if(!r){$('entity-detail').innerHTML='<p class="empty-selection">Selecciona cualquier punto del gráfico o una fila de la tabla para consultar sus resultados.</p>';return;}
+  const metrics=[['Provincia',r.provincia],['Población',nf(r.poblacion,0)],['Deuda por habitante',nf(r.deuda_hab)+' €'],['Inversión por habitante',nf(r.inversion_hab)+' €'],['PC1 social',nf(r.pc_social)],['PC1 financiero',nf(r.pc_fin1)],['PC2 financiero',nf(r.pc_fin2)],['Silueta individual',nf(r.silueta)]];
+  $('entity-detail').innerHTML=`<div class="detail-id">${escapeHTML(r.id)} ${pill(r.cluster)}</div><p class="detail-caption">Identificador seudonimizado · ${escapeHTML(r.comunidad||'')}</p><div class="detail-values">${metrics.map(([k,v])=>`<div><small>${escapeHTML(k)}</small><strong>${escapeHTML(v)}</strong></div>`).join('')}</div>`;
+}
+function chartLayout(three=false){
+  const fg='#60748a',grid='#edf1f5';
+  const base={margin:three?{l:0,r:0,t:10,b:0}:{l:82,r:26,t:16,b:68},paper_bgcolor:'#fff',plot_bgcolor:'#fff',font:{family:'DM Sans, sans-serif',color:fg,size:11},hovermode:'closest',showlegend:false,dragmode:three?'orbit':'zoom'};
+  if(three)return {...base,scene:{xaxis:{title:'PC1 social',backgroundcolor:'#fff',gridcolor:'#e7edf2',zerolinecolor:'#ccd6de'},yaxis:{title:'PC1 financiero',backgroundcolor:'#fff',gridcolor:'#e7edf2',zerolinecolor:'#ccd6de'},zaxis:{title:'PC2 financiero',backgroundcolor:'#fff',gridcolor:'#e7edf2',zerolinecolor:'#ccd6de'},aspectmode:'data'}};
+  return {...base,xaxis:{title:LABELS[$('axis-x').value],gridcolor:grid,zerolinecolor:'#d4dee6'},yaxis:{title:LABELS[$('axis-y').value],gridcolor:grid,zerolinecolor:'#d4dee6'}};
+}
+function renderChart(){if(typeof Plotly==='undefined'){ $('chart-error').hidden=false;return;}$('chart-error').hidden=true;const three=state.view==='3d',centroids=state.view==='profiles',keys=Object.keys(COLORS),traces=[];
+  if(centroids){for(const key of keys){const r=state.profiles.find(x=>x.cluster===key);if(!r||!state.clusters.has(key))continue;traces.push({type:'bar',x:['PC1 social','PC1 financiero','PC2 financiero'],y:[r.pc_social_medio,r.pc_fin1_medio,r.pc_fin2_medio],name:key,marker:{color:COLORS[key]},hovertemplate:`${key}<br>%{x}: %{y:.3f}<extra></extra>`});}}
+  else{for(const key of keys){const points=state.filtered.filter(r=>r.cluster===key);if(!points.length)continue;const base={type:three?'scatter3d':'scatter',mode:'markers',name:key,ids:points.map(r=>r.id),customdata:points.map(r=>r.id),hovertemplate:'%{customdata}<br>Perfil '+key+'<extra></extra>',marker:{color:COLORS[key],size:three?5:9,opacity:.87,line:three?undefined:{width:1,color:'#fff'}}};if(three){base.x=points.map(r=>r.pc_social);base.y=points.map(r=>r.pc_fin1);base.z=points.map(r=>r.pc_fin2);}else{base.x=points.map(r=>r[$('axis-x').value]);base.y=points.map(r=>r[$('axis-y').value]);}traces.push(base);}}
+  const layout=centroids?{...chartLayout(),margin:{l:58,r:20,t:25,b:45},xaxis:{title:'Componente'},yaxis:{title:'Media del componente',gridcolor:'#edf1f5'},barmode:'group',bargap:.2}:chartLayout(three);
+  Plotly.react('chart',traces,layout,{responsive:true,displaylogo:false,modeBarButtonsToRemove:['lasso2d','select2d','toImage']}).then(()=>{const node=$('chart');node.removeAllListeners?.('plotly_click');if(!centroids)node.on('plotly_click',event=>{const id=event?.points?.[0]?.customdata;selectEntity(state.entities.find(r=>r.id===id));});}).catch(e=>{console.error(e);$('chart-error').hidden=false;});
+}
+function renderProfiles(){const total=state.entities.length;$('profile-cards').innerHTML=state.profiles.map(p=>`<article class="profile-card"><div class="profile-heading"><h3 style="color:${COLORS[p.cluster]}">${p.cluster}</h3><span class="profile-num">${nf(p.n,0)} entidades</span></div><p class="profile-description">${escapeHTML(DESCRIPTIONS[p.cluster]||'Perfil exploratorio.')}</p><div class="profile-divider"></div><div class="profile-metric"><span>Proporción</span><strong>${nf(100*p.n/total,1)} %</strong></div><div class="profile-bar"><i style="background:${COLORS[p.cluster]};width:${p.n/total*100}%"></i></div><div class="profile-metric" style="margin-top:15px"><span>Silueta media</span><strong>${nf(p.silueta_media,2)}</strong></div></article>`).join('');}
+function exportCSV(){const cols=[['id','ID'],['provincia','Provincia'],['comunidad','Comunidad'],['poblacion','Población'],['cluster','Perfil'],['pc_social','PC1 social'],['pc_fin1','PC1 financiero'],['pc_fin2','PC2 financiero'],['deuda_hab','Deuda/hab'],['inversion_hab','Inversión/hab'],['silueta','Silueta']];const lines=[cols.map(x=>x[1]),...state.filtered.map(r=>cols.map(x=>r[x[0]]))].map(row=>row.map(x=>'"'+String(x??'').replace(/"/g,'""')+'"').join(';')).join('\r\n');const blob=new Blob(['\uFEFF',lines],{type:'text/csv;charset=utf-8'}),url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download='ENDICEX_entidades_filtradas.csv';document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);}
+fetch('./data/endicex_k5.json').then(r=>{if(!r.ok)throw new Error('Error al descargar datos');return r.json();}).then(boot).catch(err=>{console.error(err);$('chart-error').hidden=false;$('chart-error').textContent='No se han podido cargar los datos. Publica la carpeta docs completa mediante GitHub Pages (no abras index.html como archivo local).';});
