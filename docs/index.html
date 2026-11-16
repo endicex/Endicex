@@ -10,8 +10,10 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="./styles.css">
+  <link rel="stylesheet" href="./atlas.css">
   <script defer src="./plotly.min.js"></script>
   <script defer src="./app.js"></script>
+  <script defer src="./atlas.js"></script>
 </head>
 <body>
   <a class="skip-link" href="#contenido">Saltar al contenido</a>
@@ -19,7 +21,7 @@
     <div class="container nav-inner">
       <a class="brand" href="#inicio" aria-label="ENDICEX, inicio"><span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i><i></i></span><span>ENDICEX<span class="brand-punct">.</span></span></a>
       <nav class="top-nav" aria-label="Navegación principal">
-        <a href="#explorador">Explorador</a><a href="#perfiles">Perfiles</a><a href="#metodologia">Metodología</a>
+        <a href="#explorador">Explorador</a><a href="#atlas">Territorio</a><a href="#comparador">Comparador</a><a href="#perfiles">Perfiles</a><a href="#metodologia">Metodología</a>
       </nav>
       <a href="https://github.com/endicex/Endicex" class="button button-outline nav-repo" target="_blank" rel="noopener noreferrer">Ver código <span aria-hidden="true">↗</span></a>
     </div>
@@ -72,6 +74,67 @@
       <div class="detail-grid">
         <article class="panel selection-panel"><div class="panel-head"><h3>Ficha de la entidad</h3><span class="muted-small">Selección desde gráfico o tabla</span></div><div id="entity-detail"><p class="empty-selection">Selecciona cualquier punto del gráfico para consultar sus resultados.</p></div></article>
         <article class="panel table-panel"><div class="panel-head"><h3>Entidades filtradas</h3><button class="download-link" id="download-csv" type="button">↓ Descargar CSV</button></div><div class="table-wrap"><table><caption class="sr-only">Resultados seudonimizados de las entidades filtradas</caption><thead><tr><th><button type="button" class="sort-btn" data-sort="id">Identificador ↕</button></th><th><button type="button" class="sort-btn" data-sort="cluster">Perfil ↕</button></th><th><button type="button" class="sort-btn" data-sort="pc_social">PC1 social ↕</button></th><th><button type="button" class="sort-btn" data-sort="pc_fin1">PC1 financiero ↕</button></th></tr></thead><tbody id="table-body"></tbody></table></div><p class="table-foot" id="table-foot"></p></article>
+      </div>
+    </div></section>
+
+
+    <section id="atlas" class="section section-atlas" aria-labelledby="atlas-heading"><div class="container">
+      <div class="section-top"><div>
+        <div class="section-index">02 / DISTRIBUCIÓN AGREGADA</div>
+        <h2 id="atlas-heading">La dimensión <span>territorial.</span></h2>
+        <p class="section-intro">Un mapa de áreas territoriales agregadas, sin nombres de entidades ni ubicaciones individuales. Se omiten los recuentos inferiores a cinco.</p>
+      </div></div>
+      <div class="atlas-shell">
+        <div class="atlas-map-card">
+          <div id="atlas-map-host" aria-live="polite"><p>Cargando mapa de agregaciones territoriales…</p></div>
+          <p class="atlas-error" id="atlas-map-message" aria-live="polite">Cargando resultados agregados…</p>
+        </div>
+        <aside class="atlas-side" aria-label="Información del mapa">
+          <h3>Distribución exploratoria</h3>
+          <p>La representación agrupa únicamente entidades clasificadas. No representa posiciones municipales, ni permite identificar entidades concretas.</p>
+          <div class="atlas-facts">
+            <div class="atlas-fact"><strong id="atlas-total">—</strong><span>Entidades clasificadas en el análisis</span></div>
+            <div class="atlas-fact"><strong id="atlas-covered">—</strong><span>Entidades en áreas con agregación publicable</span></div>
+            <div class="atlas-fact"><strong id="atlas-areas">—</strong><span>Áreas con recuento de al menos cinco</span></div>
+            <div class="atlas-fact"><strong>5</strong><span>Umbral mínimo de visualización</span></div>
+          </div>
+          <div class="atlas-key"><i></i> Área con agregación publicable</div>
+          <div class="atlas-key"><i class="muted"></i> Recuento suprimido o sin observaciones</div>
+          <p class="atlas-privacy"><strong>Privacidad por diseño.</strong> No se publican nombres, puntos individuales ni cruces territoriales por perfil. El mapa no ofrece un censo municipal ni incluye las diez entidades sin cuentas rendidas.</p>
+        </aside>
+      </div>
+      <p class="atlas-footnote">Geometrías regionales generalizadas a partir de datos cartográficos INSPIRE del CNIG, vía <a href="https://github.com/sergiovelayos/delitos" target="_blank" rel="noopener noreferrer">repositorio de cartografía derivada</a>. Recuadro insular con disposición esquemática. Los colores expresan frecuencias de la muestra, no riesgo fiscalizador.</p>
+    </div></section>
+
+    <section id="comparador" class="section section-comparator" aria-labelledby="atlas-compare-title"><div class="container">
+      <div class="section-top"><div>
+        <div class="section-index">03 / ANÁLISIS COMPARADO</div>
+        <h2 id="atlas-compare-title">Comparar los <span>cinco perfiles.</span></h2>
+        <p class="section-intro">Explora diferencias socioeconómicas y financieras entre conglomerados, con estadísticas agregadas. No se muestran nombres ni datos individualizados de las entidades en este comparador.</p>
+      </div></div>
+      <div class="atlas-compare-card">
+        <div class="atlas-compare-toolbar">
+          <div><span class="atlas-filter-title">Perfiles a comparar</span><div class="atlas-compare-picks" id="atlas-profile-chips" role="group" aria-label="Conglomerados seleccionados"></div></div>
+          <div class="atlas-compare-options">
+            <label>Tipo de gráfico
+              <select id="atlas-chart-mode"><option value="radar">Radar · percentiles</option><option value="bars">Barras · medianas</option></select>
+            </label>
+            <label id="atlas-metric-wrap" hidden>Indicador
+              <select id="atlas-metric"></select>
+            </label>
+            <button type="button" id="atlas-export" class="atlas-action">Exportar PNG</button>
+          </div>
+        </div>
+        <div id="atlas-compare-plot" class="atlas-compare-plot" role="img" aria-label="Comparación interactiva de los cinco conglomerados"></div>
+        <p id="atlas-chart-fallback" class="atlas-error" hidden>El gráfico no está disponible en este navegador. La tabla descriptiva sigue accesible.</p>
+        <div class="atlas-compare-below">
+          <p class="atlas-explain" id="atlas-compare-note">Cargando comparación…</p>
+          <table class="atlas-summary-table" aria-label="Resumen de medianas por conglomerado">
+            <thead><tr><th scope="col">Perfil</th><th scope="col">Entidades</th><th scope="col">Mediana · <span id="atlas-table-metric">Pobreza relativa</span></th></tr></thead>
+            <tbody id="atlas-compare-table"><tr><td colspan="3">Cargando datos…</td></tr></tbody>
+          </table>
+        </div>
+        <p class="atlas-footnote">El radar presenta percentiles de las medianas por grupo calculados respecto a las entidades analizadas; no es un índice de desempeño, ni una estimación de riesgo. Los perfiles K4 y K5 tienen cuatro entidades cada uno, por lo que sus medianas deben interpretarse con cautela.</p>
       </div>
     </div></section>
 
