@@ -12,10 +12,12 @@
   <link rel="stylesheet" href="./styles.css">
   <link rel="stylesheet" href="./atlas.css">
   <link rel="stylesheet" href="./eda-gallery.css">
+  <link rel="stylesheet" href="./home-interactive.css">
   <script defer src="./plotly.min.js"></script>
   <script defer src="./app.js"></script>
   <script defer src="./atlas.js"></script>
   <script defer src="./eda-gallery.js"></script>
+  <script defer src="./home-interactive.js"></script>
 </head>
 <body>
   <a class="skip-link" href="#contenido">Saltar al contenido</a>
@@ -36,16 +38,30 @@
           <div class="eyebrow"><span class="live-dot"></span> INVESTIGACIÓN APLICADA · REPRODUCIBILIDAD</div>
           <h1>Una nueva mirada a la <em>fiscalización pública.</em></h1>
           <p>ENDICEX explora cómo la integración de datos, el análisis de componentes principales y la segmentación multivariante pueden ayudar a comprender las diferencias entre entidades locales.</p>
-          <div class="hero-actions"><a href="#explorador" class="button button-light">Explorar resultados <span aria-hidden="true">↗</span></a><a href="#eda" class="text-link">Ver galería EDA <span aria-hidden="true">→</span></a></div>
+          <div class="hero-actions"><a href="#explorador" class="button button-light">Explorar resultados <span aria-hidden="true">↗</span></a><a href="#vista-eda" class="text-link">Explorar indicadores <span aria-hidden="true">→</span></a></div>
           <p class="hero-disclaimer">Estudio exploratorio y no representativo. Los perfiles no son juicios sobre la gestión de las entidades.</p>
         </div>
-        <div class="hero-visual" aria-hidden="true">
-          <div class="orbit orbit-one"></div><div class="orbit orbit-two"></div><div class="orbit orbit-three"></div>
-          <div class="hero-plot">
-            <span class="plot-point pt-a"></span><span class="plot-point pt-b"></span><span class="plot-point pt-c"></span><span class="plot-point pt-d"></span><span class="plot-point pt-e"></span><span class="plot-point pt-f"></span><span class="plot-point pt-g"></span><span class="plot-point pt-h"></span><span class="plot-point pt-i"></span><span class="plot-point pt-j"></span><span class="plot-point pt-k"></span><span class="plot-point pt-l"></span><span class="plot-point pt-m"></span><span class="plot-point pt-n"></span>
+        <div class="hero-visual hero-interactive">
+          <div class="home-pca-card">
+            <p class="home-pca-eyebrow">VISUALIZACIÓN REAL · 101 ENTIDADES</p>
+            <div class="home-pca-head">
+              <div><h2>El espacio de los perfiles</h2><p class="home-pca-description">Proyección de los resultados PCA y K-means. Los puntos representan entidades sin mostrar sus nombres.</p></div>
+              <label>
+                <span class="sr-only">Proyección del gráfico principal</span>
+                <select id="home-pca-projection" class="home-pca-select">
+                  <option value="social">Social · Financiero</option>
+                  <option value="financial">Financiero 1 · 2</option>
+                </select>
+              </label>
+            </div>
+            <div id="home-pca-chart" role="img" aria-label="Gráfico PCA interactivo con cinco perfiles"></div>
+            <div class="home-pca-controls">
+              <span class="home-pca-controls-label">Perfiles</span>
+              <div id="home-pca-filters" class="home-pca-controls" role="group" aria-label="Seleccionar conglomerados del gráfico de portada"></div>
+              <button id="home-pca-reset" type="button" class="home-pca-reset">Todos</button>
+            </div>
+            <p id="home-pca-status" class="home-pca-status" role="status" aria-live="polite">Cargando proyección del análisis…</p>
           </div>
-          <div class="visual-label"><small>MODELO EXPLORATORIO</small><strong>PCA <span>+</span> K-MEANS</strong><small>3 DIMENSIONES · 5 PERFILES</small></div>
-          <div class="visual-coordinate">DATO → PATRÓN → PREGUNTA</div>
         </div>
       </div>
     </section>
@@ -56,6 +72,57 @@
       <div><span class="number">03</span><span class="number-label">Componentes del modelo</span></div>
       <div><span class="number">05</span><span class="number-label">Perfiles exploratorios</span></div>
     </div></section>
+
+    <section id="vista-eda" class="section home-eda-preview" aria-labelledby="home-eda-heading">
+      <div class="container">
+        <div class="section-top">
+          <div>
+            <div class="section-index">DATOS REALES / ANTES DEL PCA</div>
+            <h2 id="home-eda-heading">Explora los indicadores <span>por estratos.</span></h2>
+            <p class="section-intro">Un anticipo interactivo del análisis exploratorio. Selecciona entre siete indicadores sociales y financieros y compara sus medianas y rangos intercuartílicos por tamaño poblacional. Los datos son agregados y no identifican municipios.</p>
+          </div>
+        </div>
+        <div class="home-eda-shell">
+          <aside class="home-eda-side">
+            <div>
+              <p class="home-eda-small-title">Dimensión</p>
+              <div id="home-eda-category" class="home-eda-categories" role="group" aria-label="Dimensión del análisis exploratorio">
+                <button type="button" class="selected" data-home-category="Social" aria-pressed="true">Social</button>
+                <button type="button" data-home-category="Financiero" aria-pressed="false">Financiera</button>
+              </div>
+            </div>
+            <div>
+              <p class="home-eda-small-title">Indicador</p>
+              <div id="home-eda-metrics" class="home-eda-metrics" role="group" aria-label="Indicador seleccionado"><span>Cargando indicadores…</span></div>
+            </div>
+            <div class="home-eda-main-stat">
+              <span>Mediana de la muestra</span>
+              <strong id="home-eda-global">—</strong>
+              <small id="home-eda-n">—</small>
+            </div>
+            <p class="home-eda-side-footer">Estadísticas descriptivas: 111 entidades para indicadores sociales y 101 con cuentas rendidas para los financieros.</p>
+          </aside>
+          <div class="home-eda-viz">
+            <div class="home-eda-viz-head">
+              <div><h3 id="home-eda-metric-title">Renta media por persona</h3><p class="home-eda-viz-sub">Comparación descriptiva por estratos de población</p></div>
+            </div>
+            <div id="home-eda-chart" role="img" aria-label="Medianas y rangos intercuartílicos por estratos"></div>
+            <p id="home-eda-range-label" class="home-eda-side-footer">La línea representa los percentiles 25 y 75; el punto marca la mediana.</p>
+            <p id="home-eda-warning" class="home-eda-warning" role="alert" hidden></p>
+            <table class="home-eda-table">
+              <caption class="sr-only">Medianas agregadas y número de entidades por estrato</caption>
+              <thead><tr><th scope="col">Estrato poblacional</th><th scope="col">Entidades</th><th scope="col">Mediana</th></tr></thead>
+              <tbody id="home-eda-table-body"></tbody>
+            </table>
+            <div class="home-eda-extra">
+              <a href="#eda">Explorar las 14 fichas del EDA</a>
+              <a href="https://github.com/endicex/Endicex/tree/main/03_resultados/analisis_exploratorio/tablas" target="_blank" rel="noopener noreferrer">Consultar las tablas fuente</a>
+            </div>
+          </div>
+        </div>
+        <p class="home-eda-limit">Estas visualizaciones no son resultados de auditoría ni permiten generalizar conclusiones al conjunto de las entidades locales. Los valores imputados se documentan en el notebook; las distribuciones originales pueden consultarse en la galería completa.</p>
+      </div>
+    </section>
 
     <section id="explorador" class="section section-explorer"><div class="container">
       <div class="section-top"><div><div class="section-index">01 / EXPLORACIÓN INTERACTIVA</div><h2>Los datos, <span>a tu alcance.</span></h2><p class="section-intro">Filtra entidades, cambia las dimensiones y examina los conglomerados. Todos los puntos proceden del archivo de resultados del repositorio.</p></div><span class="source-pill">Fuente: Excel de resultados K5</span></div>
