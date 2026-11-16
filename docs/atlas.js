@@ -139,6 +139,7 @@ function updateComparison(){
    console.error(err);byId('atlas-chart-fallback').hidden=false;
  });
 }
+function rgba(hex,alpha){const r=parseInt(hex.slice(1,3),16),g=parseInt(hex.slice(3,5),16),b=parseInt(hex.slice(5,7),16);return 'rgba('+r+','+g+','+b+','+alpha+')';}
 function radarData(groups){
  const labels=METRICS.map(m=>m.label);
  return groups.map(g=>{
@@ -146,7 +147,7 @@ function radarData(groups){
   return {type:'scatterpolar',mode:'lines+markers',name:g.cluster+' · n='+g.rows.length,
    r:[...r,r[0]],theta:[...labels,labels[0]],connectgaps:false,
    line:{color:COLORS[g.cluster],width:2.5},marker:{color:COLORS[g.cluster],size:5},
-   fill:'toself',fillcolor:COLORS[g.cluster]+'24',hovertemplate:'%{theta}<br>Percentil: %{r:.1f}<extra>%{fullData.name}</extra>'};
+   fill:'toself',fillcolor:rgba(COLORS[g.cluster],0.13),hovertemplate:'%{theta}<br>Percentil: %{r:.1f}<extra>%{fullData.name}</extra>'};
  });
 }
 function radarLayout(){
