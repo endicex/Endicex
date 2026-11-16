@@ -339,6 +339,7 @@
       $(id)?.addEventListener('click',open);
     }
     $('story-close').addEventListener('click',close);
+    $('story-method-link')?.addEventListener('click',()=>close());
     $('story-prev').addEventListener('click',()=>go(chapter-1));
     $('story-next').addEventListener('click',()=>go(chapter===CHAPTERS.length-1?0:chapter+1));
     $('story-play').addEventListener('click',()=>{
