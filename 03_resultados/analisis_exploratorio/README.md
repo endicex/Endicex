@@ -12,7 +12,7 @@ Los resultados sociales abarcan 111 entidades; los financieros, 101 con cuentas 
 
 ## Confidencialidad y trazabilidad
 
-La tabla de trazabilidad `04_trazabilidad_END_HAB.csv` **no se ha duplicado en estos resultados**, porque incluye códigos INE que identifican municipios y pueden permitir reidentificación. El archivo original sigue en [02_notebooks/analisis_exploratorio](../../02_notebooks/analisis_exploratorio/) y, mientras el repositorio sea público, también será accesible: es importante decidir expresamente si debe conservarse publicado o sustituirse por una versión anonimizada.
+La tabla de trazabilidad `04_trazabilidad_END_HAB.csv` se ha retirado de la versión actual del repositorio porque contiene códigos INE que pueden identificar municipios. Se recomienda no publicar esa salida sin anonimizarla previamente.
 
 Las figuras y las tablas pueden contener identificadores seudonimizados y valores estadísticos. No se muestran nombres de municipios como etiquetas del repositorio; aun así, antes de cualquier difusión externa debe revisarse el riesgo de reidentificación por cruce de variables.
 
