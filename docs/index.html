@@ -13,11 +13,13 @@
   <link rel="stylesheet" href="./atlas.css">
   <link rel="stylesheet" href="./eda-gallery.css">
   <link rel="stylesheet" href="./home-interactive.css">
+  <link rel="stylesheet" href="./no-rendicion.css">
   <script defer src="./plotly.min.js"></script>
   <script defer src="./app.js"></script>
   <script defer src="./atlas.js"></script>
   <script defer src="./eda-gallery.js"></script>
   <script defer src="./home-interactive.js"></script>
+  <script defer src="./no-rendicion.js"></script>
 </head>
 <body>
   <a class="skip-link" href="#contenido">Saltar al contenido</a>
@@ -25,7 +27,7 @@
     <div class="container nav-inner">
       <a class="brand" href="#inicio" aria-label="ENDICEX, inicio"><span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i><i></i></span><span>ENDICEX<span class="brand-punct">.</span></span></a>
       <nav class="top-nav" aria-label="Navegación principal">
-        <a href="#explorador">Explorador</a><a href="#eda">Galería EDA</a><a href="#atlas">Territorio</a><a href="#comparador">Comparador</a><a href="#perfiles">Perfiles</a><a href="#metodologia">Metodología</a>
+        <a href="#explorador">Explorador</a><a href="#eda">Galería EDA</a><a href="#no-rendicion">No rendición</a><a href="#atlas">Territorio</a><a href="#comparador">Comparador</a><a href="#perfiles">Perfiles</a><a href="#metodologia">Metodología</a>
       </nav>
       <a href="https://github.com/endicex/Endicex" class="button button-outline nav-repo" target="_blank" rel="noopener noreferrer">Ver código <span aria-hidden="true">↗</span></a>
     </div>
@@ -176,9 +178,66 @@
       </div>
     </section>
 
+    <section id="no-rendicion" class="section section-no-rendicion" aria-labelledby="nr-title">
+      <div class="container">
+        <div class="section-top"><div>
+          <div class="section-index">03 / ANÁLISIS ESPECÍFICO DE RENDICIÓN</div>
+          <h2 id="nr-title">No rendición de cuentas. <span>¿Qué muestra PCS1?</span></h2>
+          <p class="section-intro">De las 111 entidades de partida, diez no disponían de cuentas rendidas de 2024. Este apartado analiza su distribución sobre la primera componente social tipificada (<strong>PCS1</strong>), sin atribuirles perfiles financieros ni incluirlas en el modelo K-means de 101 entidades.</p>
+        </div></div>
+
+        <div class="nr-summary" aria-label="Cobertura de la rendición de cuentas en 2024">
+          <div class="nr-stat"><strong>10 <span style="font-size:18px;color:#748899">/ 111</span></strong><span>Entidades sin cuentas rendidas de 2024 en la muestra (9,0 %)</span></div>
+          <div class="nr-stat"><strong>4</strong><span>Rindieron cuentas en 2023, pero no en 2024</span></div>
+          <div class="nr-stat"><strong>6</strong><span>No rindieron cuentas ni en 2023 ni en 2024</span></div>
+        </div>
+
+        <div class="nr-main">
+          <article class="nr-chart-card" aria-labelledby="nr-chart-title">
+            <div class="nr-chart-head">
+              <div>
+                <h3 id="nr-chart-title">Distribución individual de PCS1</h3>
+                <p>10 entidades excluidas de la segmentación · dos situaciones de rendición</p>
+              </div>
+            </div>
+            <div id="nr-chart" class="nr-chart" role="img" aria-label="Diez entidades sin rendición de 2024 distribuidas sobre PCS1 social, cuatro con cuentas de 2023 y seis sin cuentas en ambos años"></div>
+            <p id="nr-status" class="nr-chart-message" role="status" aria-live="polite">Preparando la visualización PCS1…</p>
+            <div class="nr-chart-footer">
+              <span>Fuente: resultados ENDICEX · bloque 5 del notebook</span>
+              <button type="button" id="nr-export" class="nr-export" disabled>Descargar gráfico PNG</button>
+            </div>
+          </article>
+
+          <aside class="nr-interpretation" aria-label="Interpretación y estadísticos descriptivos">
+            <h3>Lectura del componente social</h3>
+            <p>Los diez valores de PCS1 presentan <strong>dispersión</strong> dentro de ambas situaciones de rendición. La mediana es de <strong>0,938</strong> entre quienes rindieron solo en 2023 y de <strong>0,892</strong> entre quienes no rindieron en ninguno de los dos ejercicios.</p>
+            <p>Estas cifras describen posiciones en el componente social, <strong>no permiten establecer una relación causal</strong> entre vulnerabilidad y falta de rendición ni justificar inferencias estadísticas con grupos tan reducidos.</p>
+            <h4>Resumen descriptivo de PCS1</h4>
+            <table class="nr-iqr-table">
+              <caption>P25, mediana y P75 del componente social tipificado</caption>
+              <thead><tr><th scope="col">Situación</th><th scope="col">n</th><th scope="col">P25</th><th scope="col">Med.</th><th scope="col">P75</th></tr></thead>
+              <tbody>
+                <tr><td><i class="nr-key" style="background:#B76446"></i>Solo 2023</td><td>4</td><td>0,224</td><td>0,938</td><td>1,532</td></tr>
+                <tr><td><i class="nr-key" style="background:#A72C55"></i>Ni 2023 ni 2024</td><td>6</td><td>0,121</td><td>0,892</td><td>1,120</td></tr>
+                <tr><td>Total no rendición</td><td>10</td><td>0,038</td><td>0,892</td><td>1,391</td></tr>
+              </tbody>
+            </table>
+            <p>PCS1 es una coordenada tipificada del análisis social, no una escala de cumplimiento de obligaciones contables.</p>
+          </aside>
+        </div>
+
+        <div class="nr-method">
+          <div><strong>Alcance y trazabilidad metodológica</strong>
+            <p>Estas diez observaciones quedan fuera de K1–K5. No se les imputan PCF1 o PCF2 ni se infieren los motivos de la no rendición. El gráfico no muestra nombres, códigos INE ni posiciones geográficas. Se trata de una muestra exploratoria no representativa y no de hallazgos de fiscalización.</p>
+          </div>
+          <a class="nr-link" href="https://github.com/endicex/Endicex/blob/main/02_notebooks/ENDICEX_Graficos_Clusters_GH.ipynb" target="_blank" rel="noopener noreferrer">Consultar bloque 5 del notebook ↗</a>
+        </div>
+      </div>
+    </section>
+
     <section id="atlas" class="section section-atlas" aria-labelledby="atlas-heading"><div class="container">
       <div class="section-top"><div>
-        <div class="section-index">03 / DISTRIBUCIÓN AGREGADA</div>
+        <div class="section-index">04 / DISTRIBUCIÓN AGREGADA</div>
         <h2 id="atlas-heading">La dimensión <span>territorial.</span></h2>
         <p class="section-intro">Un mapa de áreas territoriales agregadas, sin nombres de entidades ni ubicaciones individuales. Se omiten los recuentos inferiores a cinco.</p>
       </div></div>
@@ -206,7 +265,7 @@
 
     <section id="comparador" class="section section-comparator" aria-labelledby="atlas-compare-title"><div class="container">
       <div class="section-top"><div>
-        <div class="section-index">04 / ANÁLISIS COMPARADO</div>
+        <div class="section-index">05 / ANÁLISIS COMPARADO</div>
         <h2 id="atlas-compare-title">Comparar los <span>cinco perfiles.</span></h2>
         <p class="section-intro">Explora diferencias socioeconómicas y financieras entre conglomerados, con estadísticas agregadas. No se muestran nombres ni datos individualizados de las entidades en este comparador.</p>
       </div></div>
@@ -236,9 +295,9 @@
       </div>
     </div></section>
 
-    <section id="perfiles" class="section section-profiles"><div class="container"><div class="section-top"><div><div class="section-index">05 / CONGLOMERADOS</div><h2>Cinco perfiles. <span>Una mirada multidimensional.</span></h2><p class="section-intro">La agrupación K-means organiza las 101 entidades en cinco conjuntos de características similares. Las descripciones son exploratorias y dependen de las variables analizadas.</p></div></div><div id="profile-cards" class="profile-grid"></div><div class="profile-note">Los tamaños y centroides se obtienen directamente de la hoja <code>Resumen</code> del libro de resultados. La interpretación fiscalizadora requiere procedimientos adicionales de evidencia y validación.</div></div></section>
+    <section id="perfiles" class="section section-profiles"><div class="container"><div class="section-top"><div><div class="section-index">06 / CONGLOMERADOS</div><h2>Cinco perfiles. <span>Una mirada multidimensional.</span></h2><p class="section-intro">La agrupación K-means organiza las 101 entidades en cinco conjuntos de características similares. Las descripciones son exploratorias y dependen de las variables analizadas.</p></div></div><div id="profile-cards" class="profile-grid"></div><div class="profile-note">Los tamaños y centroides se obtienen directamente de la hoja <code>Resumen</code> del libro de resultados. La interpretación fiscalizadora requiere procedimientos adicionales de evidencia y validación.</div></div></section>
 
-    <section id="metodologia" class="section section-method"><div class="container"><div class="section-index">06 / MÉTODO Y REPRODUCIBILIDAD</div><h2>De los datos al <span>conocimiento reproducible.</span></h2><p class="section-intro">El repositorio conserva las bases de trabajo, el código y los resultados. Esta página presenta una vista derivada, sin sustituir el trabajo documentado en los notebooks.</p><div class="method-grid">
+    <section id="metodologia" class="section section-method"><div class="container"><div class="section-index">07 / MÉTODO Y REPRODUCIBILIDAD</div><h2>De los datos al <span>conocimiento reproducible.</span></h2><p class="section-intro">El repositorio conserva las bases de trabajo, el código y los resultados. Esta página presenta una vista derivada, sin sustituir el trabajo documentado en los notebooks.</p><div class="method-grid">
       <a href="https://github.com/endicex/Endicex/tree/main/01_datos" target="_blank" rel="noopener noreferrer" class="method-card"><span>01</span><h3>Datos</h3><p>Fuentes y archivos de entrada, incluido el libro que alimenta este explorador.</p><b>Explorar carpeta ↗</b></a>
       <a href="https://github.com/endicex/Endicex/tree/main/02_notebooks" target="_blank" rel="noopener noreferrer" class="method-card"><span>02</span><h3>Notebooks</h3><p>Preparación, PCA, K-means, interpretación y cartografía.</p><b>Explorar carpeta ↗</b></a>
       <a href="https://github.com/endicex/Endicex/tree/main/03_resultados" target="_blank" rel="noopener noreferrer" class="method-card"><span>03</span><h3>Resultados</h3><p>Tablas y salidas generadas durante el análisis.</p><b>Explorar carpeta ↗</b></a>
