@@ -1,0 +1,39 @@
+/* ENDICEX · Bloque específico de no rendición en 2024. */
+@media(min-width:1001px){.top-nav{gap:18px}.top-nav a{font-size:12px}}
+.section-no-rendicion{background:#fff;border-top:1px solid #e7edf1;border-bottom:1px solid #e7edf1}
+.section-no-rendicion .section-intro{max-width:850px}
+.nr-summary{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin:29px 0 23px}
+.nr-stat{border:1px solid #dfebef;border-radius:12px;background:#f7fafb;padding:18px 21px;display:flex;flex-direction:column;gap:4px}
+.nr-stat strong{font:800 35px/1.15 Manrope,system-ui,sans-serif;color:#162e3f;letter-spacing:-.055em}
+.nr-stat:nth-child(2) strong{color:#af654a}
+.nr-stat:nth-child(3) strong{color:#a12c58}
+.nr-stat span{font-size:12px;color:#657989;line-height:1.5}
+.nr-main{display:grid;grid-template-columns:minmax(0,1.52fr) minmax(290px,.76fr);align-items:start;gap:21px}
+.nr-chart-card{border:1px solid #dfe9ed;background:#fff;border-radius:14px;overflow:hidden;box-shadow:0 9px 30px rgba(19,53,72,.045)}
+.nr-chart-head{display:flex;align-items:center;justify-content:space-between;gap:15px;padding:20px 22px 10px}
+.nr-chart-head h3{font-size:19px;line-height:1.3;margin:0;color:#233449}
+.nr-chart-head p{font-size:11px;color:#7a8994;margin:5px 0 0}
+.nr-chart{width:100%;height:420px;min-height:310px}
+.nr-chart-message{font-size:12px;padding:0 24px 20px;color:#718498}
+.nr-chart-footer{display:flex;gap:12px;flex-wrap:wrap;align-items:center;justify-content:space-between;border-top:1px solid #e9eff2;padding:14px 22px}
+.nr-chart-footer span{color:#647688;font-size:11px}
+.nr-export{border:1px solid #cbdce3;border-radius:7px;color:#23566a;background:#eff7f8;padding:8px 12px;font-size:12px;font-weight:800;white-space:nowrap}
+.nr-export:disabled{cursor:default;opacity:.48}
+.nr-interpretation{border:1px solid #e4eaf0;border-radius:14px;padding:24px 24px;background:#fafcfd}
+.nr-interpretation h3{font-size:19px;line-height:1.3;color:#192f40;margin:0 0 18px}
+.nr-interpretation h4{margin:20px 0 8px;font-size:12px;text-transform:uppercase;letter-spacing:.07em;color:#667b8b}
+.nr-interpretation p{font-size:13px;color:#526676;line-height:1.7;margin:0 0 15px}
+.nr-interpretation strong{color:#1b394a}
+.nr-iqr-table{width:100%;border-collapse:collapse;font-size:12px;margin:12px 0 14px}
+.nr-iqr-table caption{font-size:11px;text-align:left;color:#708494;padding:0 0 9px}
+.nr-iqr-table th{color:#647688;text-align:right;border-bottom:1px solid #d9e3e9;padding:9px 6px;font-weight:700}
+.nr-iqr-table th:first-child,.nr-iqr-table td:first-child{text-align:left}
+.nr-iqr-table td{border-bottom:1px solid #e6edf1;padding:10px 6px;text-align:right;font-variant-numeric:tabular-nums;color:#30485a}
+.nr-iqr-table tr:last-child td{font-weight:800}
+.nr-key{display:inline-block;width:9px;height:9px;border-radius:2px;margin-right:6px;vertical-align:1px;transform:rotate(45deg)}
+.nr-method{margin-top:21px;padding:16px 20px;border-left:3px solid #55a69a;background:#f4f8f8;display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:18px}
+.nr-method strong{color:#24475c;font-size:12px}
+.nr-method p{font-size:12px;color:#607483;line-height:1.7;margin:7px 0 0}
+.nr-link{font-size:12px;font-weight:800;color:#206d68;text-decoration:underline;text-underline-offset:3px;white-space:nowrap}
+@media(max-width:920px){.nr-main{grid-template-columns:1fr}.nr-interpretation{padding:20px}.nr-chart{height:390px}}
+@media(max-width:650px){.nr-summary{grid-template-columns:1fr 1fr;gap:9px}.nr-stat{padding:13px}.nr-stat:first-child{grid-column:span 2}.nr-stat strong{font-size:30px}.nr-chart-head{padding:16px}.nr-chart-head h3{font-size:17px}.nr-chart{height:380px;min-height:330px}.nr-chart-footer{padding:12px 15px}.nr-method{grid-template-columns:1fr}.nr-link{white-space:normal}.nr-iqr-table{font-size:11px}}
