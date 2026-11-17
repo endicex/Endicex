@@ -375,6 +375,7 @@
       profileCounts=counts;
       stats=eda&&Array.isArray(eda.metrics)?eda:null;
       if(d.open)render();
+      else if(new URLSearchParams(window.location.search).get('tour')==='1')open();
     });
   }
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else init();
