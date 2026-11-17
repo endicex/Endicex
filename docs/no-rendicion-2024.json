@@ -1,0 +1,49 @@
+{
+  "schema": "endicex-no-rendicion-v1",
+  "titulo": "No rendición de cuentas en 2024 · distribución PCS1",
+  "fuente": "01_datos/ENDICEX_Resultados_PCA_Kmeans_K5.xlsx · Base_111; 02_notebooks/ENDICEX_Graficos_Clusters_GH.ipynb · bloque 5",
+  "alcance": "Muestra exploratoria no representativa. No constituye un hallazgo de fiscalización.",
+  "muestraInicial": 111,
+  "clasificados": 101,
+  "sinRendicion2024": 10,
+  "grupos": [
+    {
+      "key": "solo2023",
+      "label": "Rindieron en 2023, no en 2024",
+      "n": 4,
+      "color": "#B76446",
+      "scores": [
+        -0.3111598867700421,
+        0.4020109537345352,
+        1.474059107101142,
+        1.704574545500207
+      ],
+      "p25": 0.224,
+      "mediana": 0.938,
+      "p75": 1.532
+    },
+    {
+      "key": "ninguno",
+      "label": "Sin rendición en 2023 ni 2024",
+      "n": 6,
+      "color": "#A72C55",
+      "scores": [
+        -0.4415010872623662,
+        -0.08381814555812372,
+        0.7370151819317642,
+        1.046975329720223,
+        1.143699161340297,
+        2.323994111249688
+      ],
+      "p25": 0.121,
+      "mediana": 0.892,
+      "p75": 1.12
+    }
+  ],
+  "total": {
+    "n": 10,
+    "p25": 0.038,
+    "mediana": 0.892,
+    "p75": 1.391
+  }
+}
